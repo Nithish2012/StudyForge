@@ -8,7 +8,7 @@ on:
       upstream_repository:
         description: 'Owner/repo of the source repository to sync from'
         required: false
-        default: 'Nithish2012/StudyForge'
+        default: ''
         type: string
       upstream_branch:
         description: 'Source branch to sync from'
@@ -32,6 +32,11 @@ jobs:
       UPSTREAM_BRANCH: ${{ github.event.inputs.upstream_branch || 'main' }}
       TARGET_BRANCH: ${{ github.event.inputs.target_branch || 'main' }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Validate upstream configuration
         run: |
           if [ -z "$UPSTREAM_REPOSITORY" ]; then
